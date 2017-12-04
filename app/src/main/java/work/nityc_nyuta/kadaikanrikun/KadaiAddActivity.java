@@ -215,6 +215,15 @@ public class KadaiAddActivity extends AppCompatActivity{
             RealmQuery<SubjectDatabase> subject_data = realm.where(SubjectDatabase.class);
             final RealmResults<SubjectDatabase> subject_result = subject_data.findAll();
 
+            if(!(bo_date_date && bo_date_time) && (bo_date_date || bo_date_time)) {
+                Toast.makeText(KadaiAddActivity.this, "入力されていない箇所があります", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            if(!(bo_notify_date && bo_notify_time) && (bo_notify_date || bo_notify_time)) {
+                Toast.makeText(KadaiAddActivity.this, "入力されていない箇所があります", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
             //データセット
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
@@ -223,12 +232,13 @@ public class KadaiAddActivity extends AppCompatActivity{
                     kadai.setSubjectId(subject_result.get(subjectID_idx).getSubjectId());
                     kadai.setName(kadai_name.getText().toString());
                     kadai.setMemo(kadai_memo.getText().toString());
-                    if(bo_date_date || bo_date_time) {
+
+                    if(bo_date_date && bo_date_time) {
                         kadai.setDate(TimeToString(kadai_date_date.getText().toString(), kadai_date_time.getText().toString()));
                     }else{
                         kadai.setDate("");
                     }
-                    if(bo_notify_date || bo_notify_time) {
+                    if(bo_notify_date && bo_notify_time) {
                         kadai.setNotify(TimeToString(kadai_notify_date.getText().toString(), kadai_notify_time.getText().toString()));
                     }else{
                         kadai.setNotify("");
