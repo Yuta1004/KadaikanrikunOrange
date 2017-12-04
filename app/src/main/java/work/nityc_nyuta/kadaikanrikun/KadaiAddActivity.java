@@ -274,6 +274,13 @@ public class KadaiAddActivity extends AppCompatActivity{
             });
             Toast.makeText(this, subjectNames.getItemAtPosition(subjectID_idx)+ " " + kadai_name.getText().toString() + " を追加しました",
                     Toast.LENGTH_SHORT).show();
+            subjectNames.setSelection(0);
+            kadai_name.setText("");
+            kadai_memo.setText("");
+            kadai_date_date.setText("");
+            kadai_date_time.setText("");
+            kadai_notify_date.setText("");
+            kadai_notify_time.setText("");
             return true;
         }
 
