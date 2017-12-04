@@ -2,6 +2,7 @@ package work.nityc_nyuta.kadaikanrikun;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
@@ -172,6 +174,21 @@ public class KadaiAddActivity extends AppCompatActivity{
         });
     }
 
+    @Override
+    public void onBackPressed(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(KadaiAddActivity.this);
+        alertDialogBuilder.setTitle("確認");
+        alertDialogBuilder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) { return; }
+        });
+        alertDialogBuilder.setMessage("作業は保存されていません。終了しますか？");
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {finish();}
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
 
     @Override
     //オプションメニュー作成
@@ -186,7 +203,17 @@ public class KadaiAddActivity extends AppCompatActivity{
         int id = item.getItemId();
 
         if (id == R.id.action_home) {
-            finish();
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(KadaiAddActivity.this);
+            alertDialogBuilder.setTitle("確認");
+            alertDialogBuilder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) { return; }
+            });
+            alertDialogBuilder.setMessage("作業は保存されていません。終了しますか？");
+            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {finish();}
+            });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
             return true;
         }
 
