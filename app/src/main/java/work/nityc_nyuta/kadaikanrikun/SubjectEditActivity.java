@@ -113,6 +113,21 @@ public class SubjectEditActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SubjectEditActivity.this);
+        alertDialogBuilder.setTitle("確認");
+        alertDialogBuilder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) { return; }
+        });
+        alertDialogBuilder.setMessage("作業は保存されていません。終了しますか？");
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {finish();}
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    @Override
     //オプションメニュー作成
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.subject_edit, menu);
