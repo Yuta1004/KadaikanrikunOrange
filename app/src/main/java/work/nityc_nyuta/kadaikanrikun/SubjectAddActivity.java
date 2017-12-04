@@ -95,7 +95,7 @@ public class SubjectAddActivity extends AppCompatActivity {
         alertDialogBuilder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) { return; }
         });
-        alertDialogBuilder.setMessage("作業は保存されていません。終了しますか？");
+        alertDialogBuilder.setMessage("終了しますか？");
         alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {finish();}
         });
@@ -137,7 +137,7 @@ public class SubjectAddActivity extends AppCompatActivity {
             alertDialogBuilder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) { return; }
             });
-            alertDialogBuilder.setMessage("作業は保存されていません。終了しますか？");
+            alertDialogBuilder.setMessage("終了しますか？");
             alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {finish();}
             });
