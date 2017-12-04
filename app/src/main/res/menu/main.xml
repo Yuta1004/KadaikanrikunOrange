@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_all_delete"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_delete_black_24dp"
+        android:title="@string/all_delete"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_shiborikomi"
+        android:orderInCategory="100"
+        android:title="@string/action_shiborikomi"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sort_ascending"
+        android:orderInCategory="100"
+        android:title="@string/action_sort_ascending"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sort_descending"
+        android:orderInCategory="100"
+        android:title="@string/action_sort_descending"
+        app:showAsAction="never" />
+</menu>

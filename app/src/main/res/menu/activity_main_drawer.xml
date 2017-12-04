@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_add_kadai"
+            android:icon="@drawable/ic_playlist_add_black_24dp"
+            android:title="@string/nav_add_kadai" />
+        <item
+            android:id="@+id/nav_add_kamoku"
+            android:icon="@drawable/ic_note_add_black_24dp"
+            android:title="@string/nav_add_kamoku" />
+
+        <item
+            android:id="@+id/nav_show_kamoku"
+            android:icon="@drawable/ic_format_list_bulleted_black_24dp"
+            android:title="@string/nav_show_kamoku" />
+    </group>
+
+    <item android:title="@string/sonota">
+        <menu android:checkableBehavior="single">
+
+            <item
+                android:id="@+id/nav_settings"
+                android:title="@string/nav_settings" />
+            <item
+                android:id="@+id/nav_credit"
+                android:title="@string/nav_credit" />
+        </menu>
+    </item>
+
+</menu>

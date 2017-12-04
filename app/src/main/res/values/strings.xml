@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">課題管理くん ver.X</string>
+
+    <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
+    <string name="navigation_drawer_close">ナビゲーションドロワーを閉じる</string>
+
+    <string name="nav_home">ホーム</string>
+    <string name="nav_add_kadai">課題追加</string>
+    <string name="kadai_subject">科目(※)</string>
+    <string name="kadai_name">課題(※)</string>
+    <string name="kadai_memo">メモ</string>
+    <string name="kadai_date">期限</string>
+    <string name="kadai_notify">通知</string>
+    <string name="kadai_add">課題追加</string>
+
+
+    <string name="nav_add_kamoku">科目追加</string>
+    <string name="subject_name">教科名(※)</string>
+    <string name="subject_teacher">講師</string>
+    <string name="subject_item">教材</string>
+    <string name="subject_color">テーマカラー</string>
+    <string name="subject_add">科目追加</string>
+
+    <string name="nav_show_kamoku">登録済み科目一覧</string>
+    <string name="all_delete">全削除</string>
+
+    <string name="action_back">戻る</string>
+    <string name="action_save">保存</string>
+
+    <string name="nav_settings">設定</string>
+    <string name="nav_credit">クレジット</string>
+
+    <string name="sonota">その他</string>
+
+    <string name="action_shiborikomi">絞り込み</string>
+    <string name="action_sort_ascending">昇順ソート</string>
+    <string name="action_sort_descending">降順ソート</string>
+</resources>
