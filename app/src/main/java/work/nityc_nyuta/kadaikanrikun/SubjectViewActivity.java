@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class SubjectViewActivity extends AppCompatActivity {
 
@@ -43,7 +44,7 @@ public class SubjectViewActivity extends AppCompatActivity {
         Realm.init(this);
         final Realm realm = Realm.getDefaultInstance();
         final RealmQuery<SubjectDatabase> data = realm.where(SubjectDatabase.class);
-        final RealmResults<SubjectDatabase> result = data.findAll();
+        final RealmResults<SubjectDatabase> result = data.findAllSorted("subjectId", Sort.ASCENDING);
 
         //Listview設定
         final ListView subject_view_list = (ListView)findViewById(R.id.subject_view_list);
