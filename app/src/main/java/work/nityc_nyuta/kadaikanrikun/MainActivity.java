@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -93,6 +94,24 @@ public class MainActivity extends AppCompatActivity
         KadaiShowListAdapter adapter = new KadaiShowListAdapter(this);
         adapter.setKadaiShowLists(list);
         kadai_view_list.setAdapter(adapter);
+
+        //アイテムタップ
+        kadai_view_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(MainActivity.this, "アイテムタップ", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //アイテム長押し
+        kadai_view_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "アイテム長押し", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
 
         //データセット
         for (int i = 0; i < kadai_result.size(); i++) {
