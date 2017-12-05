@@ -18,7 +18,7 @@ import javax.security.auth.Subject;
 import work.nityc_nyuta.kadaikanrikun.SubjectShowList;
 
 
-class KadaiShowListAdapter extends BaseAdapter {
+public class KadaiShowListAdapter extends BaseAdapter {
 
     Context context;
     LayoutInflater layoutInflater;
