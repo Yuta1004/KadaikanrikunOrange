@@ -67,8 +67,8 @@ public class SubjectViewActivity extends AppCompatActivity {
 
                 //動作確認Listview
                 LayoutInflater factory = LayoutInflater.from(SubjectViewActivity.this);
-                View subject_view_longtap_popup = factory.inflate(R.layout.subject_view_longtap_popup, null);
-                final ListView selectList = (ListView)subject_view_longtap_popup.findViewById(R.id.select_dialog_listview);
+                View longtap_popup = factory.inflate(R.layout.longtap_popup, null);
+                final ListView selectList = (ListView)longtap_popup.findViewById(R.id.dialog_listview);
                 ArrayAdapter<String> select_dialog_adapter = new ArrayAdapter<String>(SubjectViewActivity.this,android.R.layout.simple_list_item_1);
                     select_dialog_adapter.add("科目編集");
                     select_dialog_adapter.add("削除");
@@ -76,7 +76,7 @@ public class SubjectViewActivity extends AppCompatActivity {
 
                 //ダイアログ生成
                 final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SubjectViewActivity.this);
-                alertDialogBuilder.setView(subject_view_longtap_popup);
+                alertDialogBuilder.setView(longtap_popup);
                 alertDialogBuilder.setTitle(result.get(position).getName());
                 final AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
