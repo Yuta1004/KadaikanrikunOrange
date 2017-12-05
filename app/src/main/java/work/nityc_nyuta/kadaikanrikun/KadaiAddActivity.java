@@ -36,6 +36,7 @@ import java.util.Calendar;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class KadaiAddActivity extends AppCompatActivity{
 
@@ -52,7 +53,7 @@ public class KadaiAddActivity extends AppCompatActivity{
         Realm.init(this);
         Realm realm = Realm.getDefaultInstance();
         RealmQuery<SubjectDatabase> subject_data = realm.where(SubjectDatabase.class);
-        RealmResults<SubjectDatabase> subject_result = subject_data.findAll();
+        RealmResults<SubjectDatabase> subject_result = subject_data.findAllSorted("subjectId", Sort.ASCENDING);
 
         //Spinner
         Spinner subject_names_spinner = (Spinner)findViewById(R.id.kadai_subjectNames);
