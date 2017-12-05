@@ -13,10 +13,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity
     public void showList(){
         //Realm
         Realm.init(this);
-        Realm realm = Realm.getDefaultInstance();
+        final Realm realm = Realm.getDefaultInstance();
         RealmQuery<KadaiDatabase> kadai_data = realm.where(KadaiDatabase.class);
         final RealmResults<KadaiDatabase> kadai_result = kadai_data.findAll();
         for(int i = 0; i <  kadai_result.size(); i++){
@@ -106,8 +108,68 @@ public class MainActivity extends AppCompatActivity
         //アイテム長押し
         kadai_view_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "アイテム長押し", Toast.LENGTH_SHORT).show();
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                //動作確認
+                LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+                View longtap_popup = factory.inflate(R.layout.longtap_popup, null);
+                final ListView selectList = (ListView)longtap_popup.findViewById(R.id.dialog_listview);
+                ArrayAdapter<String> select_dialog_adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_1);
+                select_dialog_adapter.add("課題編集");
+                select_dialog_adapter.add("削除");
+                selectList.setAdapter(select_dialog_adapter);
+
+                //ダイアログ生成
+                String subjectName = "";
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                alertDialogBuilder.setView(longtap_popup);
+                realm.beginTransaction();
+                RealmResults<SubjectDatabase> subjectid_result = realm.where(SubjectDatabase.class).equalTo("subjectId",kadai_result.get(position).getSubjectId()).findAll();
+                if(subjectid_result.size() == 1){
+                    subjectName = subjectid_result.get(0).getName();
+                }else{
+                    subjectName = "課題未登録";
+                }
+                alertDialogBuilder.setTitle(subjectName + " : " + kadai_result.get(position).getName());
+                realm.commitTransaction();
+                alertDialogBuilder.setTitle(kadai_result.get(position).getName());
+                final AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
+                //アイテムタップ(動作確認ダイアログ)
+                final String finalSubjectName = subjectName;
+                selectList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent_dialog, View view_dialog, final int position_dialog, long id_dialog) {
+                        switch (position_dialog){
+                            case 0: //編集
+                                alertDialog.dismiss();
+                                showList();
+                                break;
+
+                            case 1: //削除
+                                alertDialog.dismiss();
+                                final AlertDialog.Builder alertDialogBuilder_delete = new AlertDialog.Builder(MainActivity.this);
+                                alertDialogBuilder_delete.setTitle("削除確認");
+                                alertDialogBuilder_delete.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) { return; }
+                                });
+                                alertDialogBuilder_delete.setMessage(finalSubjectName + " : " + kadai_result.get(position).getName() + " を削除してよろしいですか？");
+                                alertDialogBuilder_delete.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Toast.makeText(MainActivity.this, finalSubjectName + " : " + kadai_result.get(position).getName() + " を削除しました", Toast.LENGTH_SHORT).show();
+                                        realm.beginTransaction();
+                                        kadai_result.get(position).deleteFromRealm();
+                                        realm.commitTransaction();
+                                        showList();
+                                    }});
+                                AlertDialog alertDialog_delete = alertDialogBuilder_delete.create();
+                                alertDialog_delete.show();
+                                break;
+                        }
+                    }
+                });
+
                 return false;
             }
         });
