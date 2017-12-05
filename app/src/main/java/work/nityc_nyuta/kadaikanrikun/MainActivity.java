@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity
             //日付データを整える ~ 登録
             String date_tmp = kadai_result.get(i).getDate();
             if("".equals(date_tmp)){
-                kadaiList.setDate("期限 ");
+                kadaiList.setDate("期限 未設定");
             }else{
                 String date[] = date_tmp.split("/");
                 kadaiList.setDate("期限 " + date[0] + "/" + date[1] + "/" + date[2] + " " + date[3] + ":" + date[4]);
