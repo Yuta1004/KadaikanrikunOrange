@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import javax.security.auth.Subject;
 
 import io.realm.Realm;
@@ -85,6 +87,44 @@ public class MainActivity extends AppCompatActivity
         for(int i = 0; i <  kadai_result.size(); i++){
             Log.d("data",String.valueOf(kadai_result.get(i)));
         }
+
+        ListView kadai_view_list = (ListView)findViewById(R.id.kadai_view_list);
+        ArrayList<KadaiShowList> list = new ArrayList<>();
+        KadaiShowListAdapter adapter = new KadaiShowListAdapter(this);
+        adapter.setKadaiShowLists(list);
+        kadai_view_list.setAdapter(adapter);
+
+        //データセット
+        for (int i = 0; i < kadai_result.size(); i++) {
+            KadaiShowList kadaiList = new KadaiShowList();
+
+            //SubjectIdから科目名&色取得 ~ 登録
+            realm.beginTransaction();
+            RealmResults<SubjectDatabase> subjectid_result = realm.where(SubjectDatabase.class).equalTo("subjectId",kadai_result.get(i).getSubjectId()).findAll();
+            if(subjectid_result.size() == 1){
+                kadaiList.setID_Name(subjectid_result.get(0).getName() + " : " + kadai_result.get(i).getName());
+                kadaiList.setColor_r(subjectid_result.get(0).getColor_r());
+                kadaiList.setColor_g(subjectid_result.get(0).getColor_g());
+                kadaiList.setColor_b(subjectid_result.get(0).getColor_b());
+            }else{
+                kadaiList.setID_Name("科目未登録 : " + kadai_result.get(0).getName());
+                kadaiList.setColor_r(99);
+                kadaiList.setColor_g(99);
+                kadaiList.setColor_b(99);
+            }
+            realm.commitTransaction();
+
+            //日付データを整える ~ 登録
+            String date_tmp = kadai_result.get(i).getDate();
+            if("".equals(date_tmp)){
+                kadaiList.setDate("期限 ");
+            }else{
+                String date[] = date_tmp.split("/");
+                kadaiList.setDate("期限 " + date[0] + "/" + date[1] + "/" + date[2] + " " + date[3] + ":" + date[4]);
+            }
+            list.add(kadaiList);
+        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override
