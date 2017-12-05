@@ -29,6 +29,7 @@ import javax.security.auth.Subject;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity
         Realm.init(this);
         final Realm realm = Realm.getDefaultInstance();
         RealmQuery<KadaiDatabase> kadai_data = realm.where(KadaiDatabase.class);
-        final RealmResults<KadaiDatabase> kadai_result = kadai_data.findAll();
+        final RealmResults<KadaiDatabase> kadai_result = kadai_data.findAllSorted("date", Sort.ASCENDING);
         for(int i = 0; i <  kadai_result.size(); i++){
             Log.d("data",String.valueOf(kadai_result.get(i)));
         }
