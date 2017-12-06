@@ -34,6 +34,12 @@ import io.realm.Sort;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    int sort_num = 0;   //しない - 0, 昇順 - 1, 降順 - 2
+    String sort_target = "";
+    Boolean isShiborikomi = false;
+    String shiborikomi_target = "";
+    String shiborikomi_word = "";
+
     @Override
     //アプリ起動時
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +93,32 @@ public class MainActivity extends AppCompatActivity
         Realm.init(this);
         final Realm realm = Realm.getDefaultInstance();
         RealmQuery<KadaiDatabase> kadai_data = realm.where(KadaiDatabase.class);
-        final RealmResults<KadaiDatabase> kadai_result = kadai_data.findAllSorted("date", Sort.ASCENDING);
-        for(int i = 0; i <  kadai_result.size(); i++){
-            Log.d("data",String.valueOf(kadai_result.get(i)));
+        RealmResults<KadaiDatabase> nofinal_kadai_result = null;
+
+        //絞り込み ソート
+        if(sort_num != 0) { //ソートするorしない
+            if (sort_num == 1) { //昇順ソート
+                if(isShiborikomi){  //絞り込みするorしない
+                    nofinal_kadai_result = kadai_data.equalTo(shiborikomi_target,shiborikomi_word).findAllSorted(sort_target, Sort.ASCENDING);
+                }else{
+                    nofinal_kadai_result = kadai_data.findAllSorted(sort_target, Sort.ASCENDING);
+                }
+            }else if (sort_num == 2) { //降順ソート
+                if(isShiborikomi){  //絞り込みするorしない
+                    nofinal_kadai_result = kadai_data.equalTo(shiborikomi_target,shiborikomi_word).findAllSorted(sort_target, Sort.DESCENDING);
+                }else{
+                    nofinal_kadai_result = kadai_data.findAllSorted(sort_target, Sort.DESCENDING);
+                }
+            }
+        }else{
+            if(isShiborikomi){
+                nofinal_kadai_result = kadai_data.equalTo(shiborikomi_target,shiborikomi_word).findAll();
+            }else{
+                nofinal_kadai_result = kadai_data.findAllSorted("date",Sort.ASCENDING);
+            }
         }
+
+        final RealmResults<KadaiDatabase> kadai_result = nofinal_kadai_result;
 
         ListView kadai_view_list = (ListView)findViewById(R.id.kadai_view_list);
         ArrayList<KadaiShowList> list = new ArrayList<>();
@@ -131,14 +159,13 @@ public class MainActivity extends AppCompatActivity
                 }else{
                     subjectName = "課題未登録";
                 }
-                alertDialogBuilder.setTitle(subjectName + " : " + kadai_result.get(position).getName());
+                final String finalSubjectName = subjectName;
                 realm.commitTransaction();
-                alertDialogBuilder.setTitle(kadai_result.get(position).getName());
+                alertDialogBuilder.setTitle(finalSubjectName + " : " + kadai_result.get(position).getName());
                 final AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
 
                 //アイテムタップ(動作確認ダイアログ)
-                final String finalSubjectName = subjectName;
                 selectList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent_dialog, View view_dialog, final int position_dialog, long id_dialog) {
@@ -258,6 +285,10 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.action_shiborikomi) {
             return true;
+        }
+
+        if (id == R.id.action_sort_ascending){
+
         }
 
         return super.onOptionsItemSelected(item);
