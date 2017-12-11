@@ -16,14 +16,8 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_sort_ascending"
+        android:id="@+id/action_sort"
         android:orderInCategory="100"
-        android:title="@string/action_sort_ascending"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_sort_descending"
-        android:orderInCategory="100"
-        android:title="@string/action_sort_descending"
+        android:title="@string/action_sort"
         app:showAsAction="never" />
 </menu>

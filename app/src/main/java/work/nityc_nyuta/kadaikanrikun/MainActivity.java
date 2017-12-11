@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
-        if (id == R.id.action_sort_ascending){
+        if (id == R.id.action_sort){
 
         }
 

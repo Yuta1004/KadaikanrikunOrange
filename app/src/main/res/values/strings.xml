@@ -33,6 +33,5 @@
     <string name="sonota">その他</string>
 
     <string name="action_shiborikomi">絞り込み</string>
-    <string name="action_sort_ascending">昇順ソート</string>
-    <string name="action_sort_descending">降順ソート</string>
+    <string name="action_sort">ソート</string>
 </resources>
