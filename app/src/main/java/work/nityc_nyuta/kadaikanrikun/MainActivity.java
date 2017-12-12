@@ -20,7 +20,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -130,13 +133,41 @@ public class MainActivity extends AppCompatActivity
         kadai_view_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "アイテムタップ", Toast.LENGTH_SHORT).show();
+
+                //Viewセット
                 LayoutInflater factory = LayoutInflater.from(MainActivity.this);
                 View kadai_show_popup = factory.inflate(R.layout.kadai_show_popup, null);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+
+                    //科目名
+                    RealmResults<SubjectDatabase> subjectid_result = realm.where(SubjectDatabase.class).equalTo("subjectId",kadai_result.get(position).getSubjectId()).findAll();
+                    if(subjectid_result.size() > 0){
+                        ((TextView)kadai_show_popup.findViewById(R.id.kadai_show_subject)).setText(subjectid_result.get(0).getName());
+                    }else{
+                        ((TextView) kadai_show_popup.findViewById(R.id.kadai_show_subject)).setText("未登録");
+                    }
+
+                    //課題名 メモ
+                    ((TextView)kadai_show_popup.findViewById(R.id.kadai_show_name)).setText(kadai_result.get(position).getName());
+                    ((TextView)kadai_show_popup.findViewById(R.id.kadai_show_memo)).setText(kadai_result.get(position).getMemo());
+
+                    //期限 通知
+                    String date_and_notify[] = new String[]{kadai_result.get(position).getDate(), kadai_result.get(position).getNotify()};
+                    int date_and_notify_id[] = new int[]{R.id.kadai_show_date,R.id.kadai_show_notify_date};
+                    for (int i = 0; i < 2; i++){
+                        if("".equals(date_and_notify[i])){
+                            ((TextView)kadai_show_popup.findViewById(date_and_notify_id[i])).setText("未登録");
+                        }else{
+                            String date[] = kadai_result.get(position).getDate().split("/");
+                            ((TextView)kadai_show_popup.findViewById(date_and_notify_id[i])).setText(date[0] + "/" + date[1] + "/" + date[2] + " " + date[3] + ":" + date[4]);
+                        }
+                    }
+
+                //ダイアログ生成
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
                 alertDialogBuilder.setView(kadai_show_popup);
-                alertDialogBuilder.setTitle("課題詳細表示");
-                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialogBuilder.setTitle("");
+                alertDialogBuilder.setPositiveButton("OK",null);
+                final AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
             }
         });
