@@ -21,6 +21,9 @@
     <string name="subject_color">テーマカラー</string>
     <string name="subject_add">科目追加</string>
 
+    <string name="kadai_show_subject">科目</string>
+    <string name="kadai_show_name">課題</string>
+
     <string name="nav_show_kamoku">登録済み科目一覧</string>
     <string name="all_delete">全削除</string>
 

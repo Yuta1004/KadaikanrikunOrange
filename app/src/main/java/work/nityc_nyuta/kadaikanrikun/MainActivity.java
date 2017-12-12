@@ -130,7 +130,14 @@ public class MainActivity extends AppCompatActivity
         kadai_view_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(MainActivity.this, "アイテムタップ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "アイテムタップ", Toast.LENGTH_SHORT).show();
+                LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+                View kadai_show_popup = factory.inflate(R.layout.kadai_show_popup, null);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                alertDialogBuilder.setView(kadai_show_popup);
+                alertDialogBuilder.setTitle("課題詳細表示");
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
 
