@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity
                         if("".equals(date_and_notify[i])){
                             ((TextView)kadai_show_popup.findViewById(date_and_notify_id[i])).setText("未登録");
                         }else{
-                            String date[] = kadai_result.get(position).getDate().split("/");
+                            String date[] = date_and_notify[i].split("/");
                             ((TextView)kadai_show_popup.findViewById(date_and_notify_id[i])).setText(date[0] + "/" + date[1] + "/" + date[2] + " " + date[3] + ":" + date[4]);
                         }
                     }
