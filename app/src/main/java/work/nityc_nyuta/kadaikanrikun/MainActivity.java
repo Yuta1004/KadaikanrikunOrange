@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity
                 kadaiList.setColor_g(subjectid_result.get(0).getColor_g());
                 kadaiList.setColor_b(subjectid_result.get(0).getColor_b());
             }else{
-                kadaiList.setID_Name("科目未登録 : " + kadai_result.get(0).getName());
+                kadaiList.setID_Name("科目未登録 : " + kadai_result.get(i).getName());
                 kadaiList.setColor_r(99);
                 kadaiList.setColor_g(99);
                 kadaiList.setColor_b(99);
