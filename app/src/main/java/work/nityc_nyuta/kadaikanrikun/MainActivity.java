@@ -3,6 +3,7 @@ package work.nityc_nyuta.kadaikanrikun;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -176,6 +177,8 @@ public class MainActivity extends AppCompatActivity
         kadai_view_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                ((Vibrator)getSystemService(VIBRATOR_SERVICE)).vibrate(50);
 
                 //動作確認
                 LayoutInflater factory = LayoutInflater.from(MainActivity.this);

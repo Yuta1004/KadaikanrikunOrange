@@ -2,6 +2,7 @@ package work.nityc_nyuta.kadaikanrikun;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -64,6 +65,8 @@ public class SubjectViewActivity extends AppCompatActivity {
         subject_view_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                ((Vibrator)getSystemService(VIBRATOR_SERVICE)).vibrate(50);
 
                 //動作確認Listview
                 LayoutInflater factory = LayoutInflater.from(SubjectViewActivity.this);
