@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="work.nityc_nyuta.kadaikanrikun.SubjectAddActivity">
+    tools:context="work.nityc_nyuta.kadaikanrikun.KadaiEditActivity">
 
     <ScrollView
         android:layout_width="match_parent"

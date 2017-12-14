@@ -219,6 +219,14 @@ public class KadaiAddActivity extends AppCompatActivity{
         }
 
         if (id == R.id.action_kadai_add) {
+            SharedPreferences preferences = getSharedPreferences("DataBaseInfo",MODE_PRIVATE);
+            if(preferences.getInt("kadai_id_val",9999999) == 9999999){
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("kadai_id_val",0);
+                editor.commit();
+            }
+            final int kadai_id_val = preferences.getInt("kadai_id_val",9999999);
+
             Spinner subjectNames = (Spinner)findViewById(R.id.kadai_subjectNames);
             final EditText kadai_name = (EditText)findViewById(R.id.kadai_name);
             final EditText kadai_memo = (EditText)findViewById(R.id.kadai_memo);
@@ -258,6 +266,7 @@ public class KadaiAddActivity extends AppCompatActivity{
                 public void execute(@NonNull Realm realm) {
                     KadaiDatabase kadai = realm.createObject(KadaiDatabase.class);
                     kadai.setSubjectId(subject_result.get(subjectID_idx).getSubjectId());
+                    kadai.setKadaiId(kadai_id_val + 1);
                     kadai.setName(kadai_name.getText().toString());
                     kadai.setMemo(kadai_memo.getText().toString());
 
@@ -275,6 +284,9 @@ public class KadaiAddActivity extends AppCompatActivity{
             });
             Toast.makeText(this, subjectNames.getItemAtPosition(subjectID_idx)+ " " + kadai_name.getText().toString() + " を追加しました",
                     Toast.LENGTH_SHORT).show();
+            SharedPreferences.Editor editor  =preferences.edit();
+            editor.putInt("kadai_id_val",kadai_id_val + 1);
+            editor.commit();
             subjectNames.setSelection(0);
             kadai_name.setText("");
             kadai_memo.setText("");

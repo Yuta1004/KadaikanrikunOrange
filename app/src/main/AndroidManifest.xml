@@ -21,11 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SubjectAddActivity" />
+        <activity android:name=".SubjectAddActivity"/>
         <activity android:name=".KadaiAddActivity" />
         <activity android:name=".SubjectViewActivity" />
         <activity android:name=".SubjectEditActivity" />
-        <activity android:name=".KadaiEditActivity"></activity>
+        <activity android:name=".KadaiEditActivity"/>
     </application>
 
 </manifest>

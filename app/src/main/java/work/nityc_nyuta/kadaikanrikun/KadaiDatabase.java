@@ -13,6 +13,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class KadaiDatabase extends RealmObject {
     private int subjectId;
+    private int kadaiId;
     private String name;
     private String memo;
     private String date;
@@ -21,6 +22,10 @@ public class KadaiDatabase extends RealmObject {
     //subjectidのgetter,setter
     public int getSubjectId(){ return subjectId; }
     public void setSubjectId(int subjectId){ this.subjectId = subjectId; }
+
+    //kadaiidのgetter,setter
+    public int getKadaiId(){ return kadaiId; }
+    public void setKadaiId(int kadaiId){ this.kadaiId = kadaiId; }
 
     //nameのgetter,setter
     public String getName(){ return name; }
