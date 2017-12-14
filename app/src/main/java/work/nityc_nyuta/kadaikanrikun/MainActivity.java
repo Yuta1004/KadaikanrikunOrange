@@ -213,6 +213,8 @@ public class MainActivity extends AppCompatActivity
                         switch (position_dialog){
                             case 0: //編集
                                 alertDialog.dismiss();
+                                Intent intent = new Intent(MainActivity.this,KadaiEditActivity.class);
+                                startActivity(intent);
                                 showList();
                                 break;
 

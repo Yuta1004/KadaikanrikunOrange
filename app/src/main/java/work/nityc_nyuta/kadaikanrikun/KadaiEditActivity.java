@@ -9,5 +9,6 @@ public class KadaiEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kadai_edit);
+        setTitle("課題編集");
     }
 }
