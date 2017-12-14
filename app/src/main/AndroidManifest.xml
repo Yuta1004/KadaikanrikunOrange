@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="work.nityc_nyuta.kadaikanrikun">
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -24,7 +24,8 @@
         <activity android:name=".SubjectAddActivity" />
         <activity android:name=".KadaiAddActivity" />
         <activity android:name=".SubjectViewActivity" />
-        <activity android:name=".SubjectEditActivity"></activity>
+        <activity android:name=".SubjectEditActivity" />
+        <activity android:name=".KadaiEditActivity"></activity>
     </application>
 
 </manifest>
