@@ -214,6 +214,7 @@ public class MainActivity extends AppCompatActivity
                             case 0: //編集
                                 alertDialog.dismiss();
                                 Intent intent = new Intent(MainActivity.this,KadaiEditActivity.class);
+                                intent.putExtra("subjectID",kadai_result.get(position).getKadaiId());
                                 startActivity(intent);
                                 showList();
                                 break;
@@ -268,7 +269,7 @@ public class MainActivity extends AppCompatActivity
             //日付データを整える ~ 登録
             String date_tmp = kadai_result.get(i).getDate();
             if("".equals(date_tmp)){
-                kadaiList.setDate("期限 未設定");
+                kadaiList.setDate("期限 未登録");
             }else{
                 String date[] = date_tmp.split("/");
                 kadaiList.setDate("期限 " + date[0] + "/" + date[1] + "/" + date[2] + " " + date[3] + ":" + date[4]);
