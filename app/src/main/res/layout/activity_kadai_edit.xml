@@ -219,6 +219,32 @@
                     android:layout_height="wrap_content"
                     android:textSize="20sp" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/date_remove_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/date_remove" />
+
+                    <Button
+                        android:id="@+id/notify_remove_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/notify_remove" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp" />
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

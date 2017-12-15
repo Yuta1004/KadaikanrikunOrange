@@ -12,7 +12,8 @@
     <string name="kadai_date">期限</string>
     <string name="kadai_notify">通知</string>
     <string name="kadai_add">課題追加</string>
-    <string name="kadai_all_remove">入力内容全削除</string>
+    <string name="date_remove">期限 削除</string>
+    <string name="notify_remove">通知 削除</string>
 
 
     <string name="nav_add_kamoku">科目追加</string>
