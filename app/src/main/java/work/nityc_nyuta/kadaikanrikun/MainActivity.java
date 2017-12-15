@@ -50,6 +50,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //通知テスト用コード
+        Notification notification = new Notification();
+        Notification.setLocalNotification(this,7,3);
+
         //ツールバー
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -162,7 +166,6 @@ public class MainActivity extends AppCompatActivity
                             ((TextView)kadai_show_popup.findViewById(date_and_notify_id[i])).setText(date[0] + "/" + date[1] + "/" + date[2] + " " + date[3] + ":" + date[4]);
                         }
                     }
-
                 //ダイアログ生成
                 final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
                 alertDialogBuilder.setView(kadai_show_popup);
