@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -70,6 +71,33 @@ public class KadaiAddActivity extends AppCompatActivity{
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        //全削除ボタン
+        ((Button)findViewById(R.id.all_remove_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(KadaiAddActivity.this);
+                alertDialogBuilder.setTitle("確認");
+                alertDialogBuilder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) { return; }
+                });
+                alertDialogBuilder.setMessage("入力した内容をすべて削除しますか？");
+                alertDialogBuilder.setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                ((Spinner)findViewById(R.id.kadai_subjectNames)).setSelection(0);
+                                ((EditText)findViewById(R.id.kadai_name)).setText("");
+                                ((EditText)findViewById(R.id.kadai_memo)).setText("");
+                                ((EditText)findViewById(R.id.kadai_date_date)).setText("");
+                                ((EditText)findViewById(R.id.kadai_date_time)).setText("");
+                                ((EditText)findViewById(R.id.kadai_notify_date)).setText("");
+                                ((EditText)findViewById(R.id.kadai_notify_time)).setText("");
+                            }
+                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
         });
 
         final TextView req_focus = (TextView)findViewById(R.id.req_focus);
