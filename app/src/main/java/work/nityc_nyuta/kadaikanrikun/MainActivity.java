@@ -213,10 +213,17 @@ public class MainActivity extends AppCompatActivity
                         switch (position_dialog){
                             case 0: //編集
                                 alertDialog.dismiss();
-                                Intent intent = new Intent(MainActivity.this,KadaiEditActivity.class);
-                                intent.putExtra("subjectID",kadai_result.get(position).getKadaiId());
-                                startActivity(intent);
-                                showList();
+                                Realm.init(MainActivity.this);
+                                RealmQuery<SubjectDatabase> data = realm.where(SubjectDatabase.class);
+                                RealmResults<SubjectDatabase> result = data.findAll();
+                                if(result.size() > 0){
+                                    Intent intent = new Intent(MainActivity.this,KadaiEditActivity.class);
+                                    intent.putExtra("subjectID",kadai_result.get(position).getKadaiId());
+                                    startActivity(intent);
+                                    showList();
+                                }else{
+                                    Toast.makeText(MainActivity.this, "科目を追加してください", Toast.LENGTH_SHORT).show();
+                                }
                                 break;
 
                             case 1: //削除
