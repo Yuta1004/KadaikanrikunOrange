@@ -316,12 +316,24 @@ public class KadaiAddActivity extends AppCompatActivity{
                     kadai.setMemo(kadai_memo.getText().toString());
 
                     if(bo_date_date && bo_date_time) {
-                        kadai.setDate(TimeToString(kadai_date_date.getText().toString(), kadai_date_time.getText().toString()));
+                        String date = TimeToString(kadai_date_date.getText().toString(), kadai_date_time.getText().toString());
+                        kadai.setDate(date);
                     }else{
                         kadai.setDate("");
                     }
                     if(bo_notify_date && bo_notify_time) {
-                        kadai.setNotify(TimeToString(kadai_notify_date.getText().toString(), kadai_notify_time.getText().toString()));
+                        String date = TimeToString(kadai_notify_date.getText().toString(), kadai_notify_time.getText().toString());
+                        kadai.setNotify(date);
+
+                        //通知セット
+                        Calendar calendar = Calendar.getInstance();
+                        String date_add[] = date.split("/");
+                        calendar.set(Integer.valueOf(date_add[0]),Integer.valueOf(date_add[1])-1,Integer.valueOf(date_add[2]),Integer.valueOf(date_add[3]),Integer.valueOf(date_add[4]));
+                        long add_timemill = calendar.getTimeInMillis();
+                        long now_timemill = System.currentTimeMillis();
+                        Notification notification = new Notification();
+                        Notification.setLocalNotification(KadaiAddActivity.this,kadai_id_val + 1, (int) ((add_timemill - now_timemill)/1000));
+
                     }else{
                         kadai.setNotify("");
                     }

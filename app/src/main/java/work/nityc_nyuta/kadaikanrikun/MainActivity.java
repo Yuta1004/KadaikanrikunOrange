@@ -50,10 +50,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //通知テスト用コード
-        Notification notification = new Notification();
-        Notification.setLocalNotification(this,7,3);
-
         //ツールバー
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

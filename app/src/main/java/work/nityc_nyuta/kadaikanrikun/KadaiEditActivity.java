@@ -319,8 +319,21 @@ public class KadaiEditActivity extends AppCompatActivity {
                 kadaiDatabase.setDate("");
             }
             if(bo_notify_date && bo_notify_time) {
-                kadaiDatabase.setNotify(TimeToString(((EditText) findViewById(R.id.kadai_notify_date)).getText().toString(), ((EditText) findViewById(R.id.kadai_notify_time)).getText().toString()));
+                String date = TimeToString(((EditText) findViewById(R.id.kadai_notify_date)).getText().toString(), ((EditText) findViewById(R.id.kadai_notify_time)).getText().toString());
+                kadaiDatabase.setNotify(date);
+
+                //通知セット
+                Calendar calendar = Calendar.getInstance();
+                String date_add[] = date.split("/");
+                calendar.set(Integer.valueOf(date_add[0]),Integer.valueOf(date_add[1])-1,Integer.valueOf(date_add[2]),Integer.valueOf(date_add[3]),Integer.valueOf(date_add[4]));
+                long add_timemill = calendar.getTimeInMillis();
+                long now_timemill = System.currentTimeMillis();
+                Notification.setLocalNotification(KadaiEditActivity.this,kadaiId, (int) ((add_timemill - now_timemill)/1000));
             }else{
+                Notification notification = new Notification();
+                try {
+                    Notification.cancelLocalNotification(KadaiEditActivity.this, kadaiId);
+                }catch (Exception e){}
                 kadaiDatabase.setNotify("");
             }
             realm.commitTransaction();
