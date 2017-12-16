@@ -20,9 +20,9 @@
     <item android:title="@string/sonota">
         <menu android:checkableBehavior="single">
 
-            <item
-                android:id="@+id/nav_settings"
-                android:title="@string/nav_settings" />
+            <!--<item-->
+                <!--android:id="@+id/nav_settings"-->
+                <!--android:title="@string/nav_settings" />-->
             <item
                 android:id="@+id/nav_credit"
                 android:title="@string/nav_credit" />

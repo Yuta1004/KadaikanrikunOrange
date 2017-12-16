@@ -416,10 +416,10 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, SubjectViewActivity.class);
             startActivity(intent);
         }
-
-        if (id == R.id.nav_settings){
-            Toast.makeText(this, "未実装です", Toast.LENGTH_SHORT).show();
-        }
+//
+//        if (id == R.id.nav_settings){
+//            Toast.makeText(this, "未実装です", Toast.LENGTH_SHORT).show();
+//        }
 
         if (id == R.id.nav_credit){
             Toast.makeText(this, "未実装です", Toast.LENGTH_SHORT).show();
