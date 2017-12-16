@@ -22,7 +22,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -116,9 +118,10 @@ public class MainActivity extends AppCompatActivity
         //絞り込み ソート
         if(isShiborikomi_subject || isShiborikomi_date){
             if(isShiborikomi_subject && isShiborikomi_date){
-                nofinal_kadai_result = kadai_data.equalTo("subjectId",subjectidToName(shiborikomi_subjectid)).like("date",shiborikomi_date + "/??/??").findAllSorted("date",Sort.ASCENDING);
+                nofinal_kadai_result = kadai_data.equalTo("subjectId",shiborikomi_subjectid).like("date",shiborikomi_date + "/??/??").findAllSorted("date",Sort.ASCENDING);
             }else if(isShiborikomi_subject){
-                nofinal_kadai_result = kadai_data.equalTo("subjectId",subjectidToName(shiborikomi_subjectid)).findAllSorted("date",Sort.ASCENDING);
+                Log.d("id",String.valueOf(shiborikomi_subjectid));
+                nofinal_kadai_result = kadai_data.equalTo("subjectId",shiborikomi_subjectid).findAllSorted("date",Sort.ASCENDING);
             }else{
                 nofinal_kadai_result = kadai_data.like("date",shiborikomi_date + "/??/??").findAllSorted("date",Sort.ASCENDING);
             }
@@ -291,18 +294,6 @@ public class MainActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
     }
 
-    public String subjectidToName(int subjectId){
-        Realm.init(this);
-        final Realm realm = Realm.getDefaultInstance();
-        RealmResults<SubjectDatabase> subject_data = realm.where(SubjectDatabase.class).findAll();
-        for(int i = 0 ; i < subject_data.size(); i++){
-            if(subject_data.get(i).getSubjectId() == subjectId){
-                return subject_data.get(i).getName();
-            }
-        }
-        return "";
-    }
-
     @Override
     //戻るボタンが押された時
     public void onBackPressed() {
@@ -354,7 +345,48 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
+        //科目で絞り込み
         if (id == R.id.action_subject_shiborikomi) {
+            final int[] select_idx = {0};
+
+            Realm.init(this);
+            Realm realm = Realm.getDefaultInstance();
+            RealmResults<SubjectDatabase> subject_data = realm.where(SubjectDatabase.class).findAllSorted("subjectId",Sort.ASCENDING);
+            final int subjectIds[] = new int[subject_data.size()];
+            final String subjectNames[] = new String[subject_data.size()];
+            for(int i = 0; i < subject_data.size(); i++){
+                subjectNames[i] = subject_data.get(i).getName();
+                subjectIds[i] = subject_data.get(i).getSubjectId();
+            }
+
+            LayoutInflater factory = LayoutInflater.from(this);
+            View spinner_popup = factory.inflate(R.layout.spinner_popup, null);
+            Spinner subjectid_spinner = (Spinner)spinner_popup.findViewById(R.id.spinner_subjectid_popup);
+            ArrayAdapter<String> subjectid_adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,subjectNames);
+            subjectid_spinner.setAdapter(subjectid_adapter);
+            subjectid_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    select_idx[0] = position;
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {}
+            });
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            alertDialogBuilder.setView(spinner_popup);
+            alertDialogBuilder.setNegativeButton("キャンセル",null);
+            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    shiborikomi_subjectid = subjectIds[select_idx[0]];
+                    isShiborikomi_subject = true;
+                    showList();
+                }
+            });
+            alertDialogBuilder.setTitle("科目名で絞り込み");
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
             return true;
         }
 
