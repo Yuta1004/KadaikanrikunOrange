@@ -2,6 +2,7 @@ package work.nityc_nyuta.kadaikanrikun;
 
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -52,6 +53,12 @@ public class NotificationReceiver extends BroadcastReceiver {
             subject_name = "科目未登録";
         }
 
+        Intent view_kadai_intent = new Intent(context, MainActivity.class);
+        view_kadai_intent.putExtra("kadaiId", kadaiID);
+        view_kadai_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+
+        PendingIntent content_intent = PendingIntent.getActivity(context, 0, view_kadai_intent,PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
+
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(context)
@@ -59,7 +66,8 @@ public class NotificationReceiver extends BroadcastReceiver {
                         .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
                         .setContentTitle(subject_name + " : " + data.get(0).getName())
                         .setContentText(data.get(0).getMemo())
-                        .setDefaults(1);
+                        .setDefaults(1)
+                        .setContentIntent(content_intent);
         notificationManager.notify(kadaiID, builder.build());
     }
 

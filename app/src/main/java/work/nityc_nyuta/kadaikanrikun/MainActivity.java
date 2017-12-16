@@ -87,6 +87,16 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        //通知から起動した場合
+        try{
+            Intent notify_intent = getIntent();
+            int notify_kadaiId = notify_intent.getIntExtra("kadaiId",9999999);
+            Log.d("id", String.valueOf(notify_kadaiId));
+            if(notify_kadaiId != 9999999){
+                notify_popup(notify_kadaiId);
+            }
+        }catch (Exception e){}
+
         setTitle("課題管理くん");
     }
 
@@ -94,6 +104,50 @@ public class MainActivity extends AppCompatActivity
     public void onResume(){
         super.onResume();
         showList();
+    }
+
+    public void notify_popup(int kadaiId){
+        Realm.init(this);
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<KadaiDatabase> kadai_result = realm.where(KadaiDatabase.class).equalTo("kadaiId",kadaiId).findAll();
+        if(kadai_result.size() == 0){
+            return;
+        }
+
+        //Viewセット
+        LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+        View kadai_show_popup = factory.inflate(R.layout.kadai_show_popup, null);
+
+        //科目名
+        RealmResults<SubjectDatabase> subjectid_result = realm.where(SubjectDatabase.class).equalTo("subjectId",kadai_result.get(0).getSubjectId()).findAll();
+        if(subjectid_result.size() > 0){
+            ((TextView)kadai_show_popup.findViewById(R.id.kadai_show_subject)).setText(subjectid_result.get(0).getName());
+        }else{
+            ((TextView) kadai_show_popup.findViewById(R.id.kadai_show_subject)).setText("未登録");
+        }
+
+        //課題名 メモ
+        ((TextView)kadai_show_popup.findViewById(R.id.kadai_show_name)).setText(kadai_result.get(0).getName());
+        ((TextView)kadai_show_popup.findViewById(R.id.kadai_show_memo)).setText(kadai_result.get(0).getMemo());
+
+        //期限 通知
+        String date_and_notify[] = new String[]{kadai_result.get(0).getDate(), kadai_result.get(0).getNotify()};
+        int date_and_notify_id[] = new int[]{R.id.kadai_show_date,R.id.kadai_show_notify_date};
+        for (int i = 0; i < 2; i++){
+            if("".equals(date_and_notify[i])){
+                ((TextView)kadai_show_popup.findViewById(date_and_notify_id[i])).setText("未登録");
+            }else{
+                String date[] = date_and_notify[i].split("/");
+                ((TextView)kadai_show_popup.findViewById(date_and_notify_id[i])).setText(date[0] + "/" + date[1] + "/" + date[2] + " " + date[3] + ":" + date[4]);
+            }
+        }
+        //ダイアログ生成
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+        alertDialogBuilder.setView(kadai_show_popup);
+        alertDialogBuilder.setTitle("");
+        alertDialogBuilder.setPositiveButton("OK",null);
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     public void showList(){
