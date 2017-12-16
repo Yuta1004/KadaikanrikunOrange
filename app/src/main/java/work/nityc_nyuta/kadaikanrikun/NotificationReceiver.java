@@ -37,11 +37,19 @@ public class NotificationReceiver extends BroadcastReceiver {
         RealmResults<KadaiDatabase> data = realm.where(KadaiDatabase.class).equalTo("kadaiId",Integer.valueOf(kadaiID)).findAll();
         RealmResults<SubjectDatabase> subject_id = realm.where(SubjectDatabase.class).findAll();
 
+        if(data.size() == 0){
+            return;
+        }
+
         for(int i = 0; i < subject_id.size(); i++){
             if(subject_id.get(i).getSubjectId() == data.get(0).getSubjectId()){
                 subject_name = subject_id.get(i).getName();
                 break;
             }
+        }
+
+        if(subject_name == ""){
+            subject_name = "科目未登録";
         }
 
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
