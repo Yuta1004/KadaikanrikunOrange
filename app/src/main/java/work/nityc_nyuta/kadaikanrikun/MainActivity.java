@@ -343,23 +343,34 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (id == R.id.action_subject_shiborikomi) {
+            return true;
+        }
+
+        //日時で絞り込み
+        if (id == R.id.action_date_shiborikomi){
             Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            int year,month,day;
+            if(!"".equals(shiborikomi_date)){
+                String now_setting_date[] = shiborikomi_date.split("/");
+                year = Integer.valueOf(now_setting_date[0]);
+                month = Integer.valueOf(now_setting_date[1])-1;
+                day = Integer.valueOf(now_setting_date[2]);
+            }else {
+                year = calendar.get(Calendar.YEAR);
+                month = calendar.get(Calendar.MONTH);
+                day = calendar.get(Calendar.DAY_OF_MONTH);
+            }
             DatePickerDialog.OnDateSetListener notifyDateSetListener = new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
+                    isShiborikomi_date = true;
+                    shiborikomi_date = String.valueOf(year) + "/" + String.valueOf(month+1) + "/" + String.valueOf(dayOfMonth);
+                    showList();
                 }
             };
             DatePickerDialog notifyDatePickerDialog = new DatePickerDialog(this,android.R.style.Theme_DeviceDefault_Light_Dialog,
                     notifyDateSetListener,year,month,day);
             notifyDatePickerDialog.show();
-            return true;
-        }
-
-        if (id == R.id.action_date_shiborikomi){
             return true;
         }
 
