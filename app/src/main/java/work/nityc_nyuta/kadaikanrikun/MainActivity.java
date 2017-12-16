@@ -236,6 +236,8 @@ public class MainActivity extends AppCompatActivity
                                 alertDialogBuilder_delete.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         Toast.makeText(MainActivity.this, finalSubjectName + " : " + kadai_result.get(position).getName() + " を削除しました", Toast.LENGTH_SHORT).show();
+                                        Notification notification = new Notification();
+                                        notification.cancelLocalNotification(MainActivity.this,kadai_result.get(0).getKadaiId());
                                         realm.beginTransaction();
                                         kadai_result.get(position).deleteFromRealm();
                                         realm.commitTransaction();
@@ -321,6 +323,10 @@ public class MainActivity extends AppCompatActivity
                     Realm realm = Realm.getDefaultInstance();
                     final RealmQuery<KadaiDatabase> data = realm.where(KadaiDatabase.class);
                     RealmResults<KadaiDatabase> result = data.findAll();
+                    for(int i = 0; i < result.size(); i++){
+                        Notification notification = new Notification();
+                        notification.cancelLocalNotification(MainActivity.this,result.get(i).getKadaiId());
+                    }
                     realm.beginTransaction();
                     result.deleteAllFromRealm();
                     realm.commitTransaction();
