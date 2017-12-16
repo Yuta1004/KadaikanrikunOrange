@@ -1,5 +1,6 @@
 package work.nityc_nyuta.kadaikanrikun;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.security.auth.Subject;
 
@@ -38,11 +41,10 @@ import io.realm.Sort;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    int sort_num = 0;   //しない - 0, 昇順 - 1, 降順 - 2
-    String sort_target = "";
-    Boolean isShiborikomi = false;
-    String shiborikomi_target = "";
-    String shiborikomi_word = "";
+    Boolean isShiborikomi_subject = false;
+    Boolean isShiborikomi_date = false;
+    int shiborikomi_subjectid;
+    String shiborikomi_date = "";
 
     @Override
     //アプリ起動時
@@ -100,26 +102,16 @@ public class MainActivity extends AppCompatActivity
         RealmResults<KadaiDatabase> nofinal_kadai_result = null;
 
         //絞り込み ソート
-        if(sort_num != 0) { //ソートするorしない
-            if (sort_num == 1) { //昇順ソート
-                if(isShiborikomi){  //絞り込みするorしない
-                    nofinal_kadai_result = kadai_data.equalTo(shiborikomi_target,shiborikomi_word).findAllSorted(sort_target, Sort.ASCENDING);
-                }else{
-                    nofinal_kadai_result = kadai_data.findAllSorted(sort_target, Sort.ASCENDING);
-                }
-            }else if (sort_num == 2) { //降順ソート
-                if(isShiborikomi){  //絞り込みするorしない
-                    nofinal_kadai_result = kadai_data.equalTo(shiborikomi_target,shiborikomi_word).findAllSorted(sort_target, Sort.DESCENDING);
-                }else{
-                    nofinal_kadai_result = kadai_data.findAllSorted(sort_target, Sort.DESCENDING);
-                }
+        if(isShiborikomi_subject || isShiborikomi_date){
+            if(isShiborikomi_subject && isShiborikomi_date){
+                nofinal_kadai_result = kadai_data.equalTo("subjectId",subjectidToName(shiborikomi_subjectid)).like("date",shiborikomi_date + "/??/??").findAll();
+            }else if(isShiborikomi_subject){
+                nofinal_kadai_result = kadai_data.equalTo("subjectId",subjectidToName(shiborikomi_subjectid)).findAll();
+            }else{
+                nofinal_kadai_result = kadai_data.like("date",shiborikomi_date + "/??/??").findAll();
             }
         }else{
-            if(isShiborikomi){
-                nofinal_kadai_result = kadai_data.equalTo(shiborikomi_target,shiborikomi_word).findAll();
-            }else{
-                nofinal_kadai_result = kadai_data.findAllSorted("date",Sort.ASCENDING);
-            }
+            nofinal_kadai_result = kadai_data.findAllSorted("date",Sort.ASCENDING);
         }
 
         final RealmResults<KadaiDatabase> kadai_result = nofinal_kadai_result;
@@ -287,6 +279,18 @@ public class MainActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
     }
 
+    public String subjectidToName(int subjectId){
+        Realm.init(this);
+        final Realm realm = Realm.getDefaultInstance();
+        RealmResults<SubjectDatabase> subject_data = realm.where(SubjectDatabase.class).findAll();
+        for(int i = 0 ; i < subject_data.size(); i++){
+            if(subject_data.get(i).getSubjectId() == subjectId){
+                return subject_data.get(i).getName();
+            }
+        }
+        return "";
+    }
+
     @Override
     //戻るボタンが押された時
     public void onBackPressed() {
@@ -338,12 +342,25 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
-        if (id == R.id.action_shiborikomi) {
+        if (id == R.id.action_subject_shiborikomi) {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            DatePickerDialog.OnDateSetListener notifyDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                }
+            };
+            DatePickerDialog notifyDatePickerDialog = new DatePickerDialog(this,android.R.style.Theme_DeviceDefault_Light_Dialog,
+                    notifyDateSetListener,year,month,day);
+            notifyDatePickerDialog.show();
             return true;
         }
 
-        if (id == R.id.action_sort){
-
+        if (id == R.id.action_date_shiborikomi){
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

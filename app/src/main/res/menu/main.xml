@@ -10,14 +10,14 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/action_shiborikomi"
+        android:id="@+id/action_subject_shiborikomi"
         android:orderInCategory="100"
-        android:title="@string/action_shiborikomi"
+        android:title="@string/action_subject_shiborikomi"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_sort"
+        android:id="@+id/action_date_shiborikomi"
         android:orderInCategory="100"
-        android:title="@string/action_sort"
+        android:title="@string/action_date_shiborikomi"
         app:showAsAction="never" />
 </menu>
