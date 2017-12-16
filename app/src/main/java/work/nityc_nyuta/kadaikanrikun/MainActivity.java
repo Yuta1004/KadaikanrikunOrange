@@ -104,11 +104,11 @@ public class MainActivity extends AppCompatActivity
         //絞り込み ソート
         if(isShiborikomi_subject || isShiborikomi_date){
             if(isShiborikomi_subject && isShiborikomi_date){
-                nofinal_kadai_result = kadai_data.equalTo("subjectId",subjectidToName(shiborikomi_subjectid)).like("date",shiborikomi_date + "/??/??").findAll();
+                nofinal_kadai_result = kadai_data.equalTo("subjectId",subjectidToName(shiborikomi_subjectid)).like("date",shiborikomi_date + "/??/??").findAllSorted("date",Sort.ASCENDING);
             }else if(isShiborikomi_subject){
-                nofinal_kadai_result = kadai_data.equalTo("subjectId",subjectidToName(shiborikomi_subjectid)).findAll();
+                nofinal_kadai_result = kadai_data.equalTo("subjectId",subjectidToName(shiborikomi_subjectid)).findAllSorted("date",Sort.ASCENDING);
             }else{
-                nofinal_kadai_result = kadai_data.like("date",shiborikomi_date + "/??/??").findAll();
+                nofinal_kadai_result = kadai_data.like("date",shiborikomi_date + "/??/??").findAllSorted("date",Sort.ASCENDING);
             }
         }else{
             nofinal_kadai_result = kadai_data.findAllSorted("date",Sort.ASCENDING);
