@@ -308,7 +308,7 @@ public class KadaiEditActivity extends AppCompatActivity {
             Realm realm = Realm.getDefaultInstance();
             realm.beginTransaction();
             RealmResults<KadaiDatabase> result = realm.where(KadaiDatabase.class).equalTo("kadaiId",kadaiId).findAll();
-            RealmResults<SubjectDatabase> subject_result = realm.where(SubjectDatabase.class).findAll();
+            RealmResults<SubjectDatabase> subject_result = realm.where(SubjectDatabase.class).findAllSorted("subjectId", Sort.ASCENDING);
             KadaiDatabase kadaiDatabase = result.get(0);
             kadaiDatabase.setSubjectId(subject_result.get(subjectID_idx).getSubjectId());
             kadaiDatabase.setName(((EditText)findViewById(R.id.kadai_name)).getText().toString());
