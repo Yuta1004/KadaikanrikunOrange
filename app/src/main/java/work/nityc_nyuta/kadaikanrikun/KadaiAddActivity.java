@@ -294,7 +294,7 @@ public class KadaiAddActivity extends AppCompatActivity{
             Realm.init(this);
             Realm realm = Realm.getDefaultInstance();
             RealmQuery<SubjectDatabase> subject_data = realm.where(SubjectDatabase.class);
-            final RealmResults<SubjectDatabase> subject_result = subject_data.findAll();
+            final RealmResults<SubjectDatabase> subject_result = subject_data.findAllSorted("subjectId",Sort.ASCENDING);
 
             if(!(bo_date_date && bo_date_time) && (bo_date_date || bo_date_time)) {
                 Toast.makeText(KadaiAddActivity.this, "入力されていない箇所があります", Toast.LENGTH_SHORT).show();
