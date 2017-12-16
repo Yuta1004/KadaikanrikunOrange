@@ -521,7 +521,8 @@ public class MainActivity extends AppCompatActivity
 //        }
 
         if (id == R.id.nav_credit){
-            Toast.makeText(this, "未実装です", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this,CreditActivity.class);
+            startActivity(intent);
         }
 
 

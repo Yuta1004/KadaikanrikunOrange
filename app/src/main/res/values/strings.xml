@@ -33,7 +33,12 @@
     <string name="action_save">保存</string>
 
     <string name="nav_settings">設定</string>
+
     <string name="nav_credit">クレジット</string>
+    <string name="support">Android 6.0 ~</string>
+    <string name="version">Orange.1.0.0</string>
+    <string name="icon">いらすとや</string>
+    <string name="copylight">© 2017 ️Yuta Nakagami</string>
 
     <string name="sonota">その他</string>
 

@@ -21,14 +21,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver
             android:name=".NotificationReceiver"
-            android:process=":remote"/>
-        <activity android:name=".SubjectAddActivity"/>
+            android:process=":remote" />
+
+        <activity android:name=".SubjectAddActivity" />
         <activity android:name=".KadaiAddActivity" />
         <activity android:name=".SubjectViewActivity" />
         <activity android:name=".SubjectEditActivity" />
-        <activity android:name=".KadaiEditActivity"/>
+        <activity android:name=".KadaiEditActivity" />
+        <activity android:name=".CreditActivity"></activity>
     </application>
 
 </manifest>
