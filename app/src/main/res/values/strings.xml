@@ -39,5 +39,5 @@
 
     <string name="action_subject_shiborikomi">科目名で絞り込み</string>
     <string name="action_date_shiborikomi">期限日時で絞り込み</string>
-    <string name="action_reset_shiborikomi">絞り込みリセット</string>
+    <string name="action_reset_shiborikomi">絞り込みをリセット</string>
 </resources>

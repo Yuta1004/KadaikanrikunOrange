@@ -95,6 +95,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void showList(){
+        //絞り込みを行なっている場合はトーストで通知
+        String toast_message = "絞り込み :";
+        if(isShiborikomi_subject || isShiborikomi_date){
+            if(isShiborikomi_subject){
+                toast_message += " 科目名";
+            }
+            if(isShiborikomi_date){
+                toast_message += " 期限日時";
+            }
+            Toast.makeText(this, toast_message, Toast.LENGTH_SHORT).show();
+        }
+
         //Realm
         Realm.init(this);
         final Realm realm = Realm.getDefaultInstance();
