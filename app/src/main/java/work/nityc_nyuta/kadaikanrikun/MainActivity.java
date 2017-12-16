@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity
             if(notify_kadaiId != 9999999){
                 notify_popup(notify_kadaiId);
             }
-        }catch (Exception e){}
+        }catch (Exception ignored){}
 
         setTitle("課題管理くん");
     }

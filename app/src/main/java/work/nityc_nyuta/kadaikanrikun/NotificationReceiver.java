@@ -58,6 +58,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         view_kadai_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
 
         PendingIntent content_intent = PendingIntent.getActivity(context, 0, view_kadai_intent,PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
+        long vib[] = {0,300,300,300};
 
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder =
@@ -67,6 +68,8 @@ public class NotificationReceiver extends BroadcastReceiver {
                         .setContentTitle(subject_name + " : " + data.get(0).getName())
                         .setContentText(data.get(0).getMemo())
                         .setDefaults(1)
+                        .setVibrate(vib)
+                        .setAutoCancel(true)
                         .setContentIntent(content_intent);
         notificationManager.notify(kadaiID, builder.build());
     }
