@@ -392,6 +392,7 @@ public class MainActivity extends AppCompatActivity
             isShiborikomi_subject = false;
             shiborikomi_date = "";
             shiborikomi_subjectid = 0;
+            Toast.makeText(this, "絞り込みを解除しました", Toast.LENGTH_SHORT).show();
             showList();
             return true;
         }
