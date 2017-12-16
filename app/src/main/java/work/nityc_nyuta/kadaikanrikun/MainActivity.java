@@ -374,6 +374,16 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
+        //絞り込みリセット
+        if (id == R.id.action_reset_shiborikomi){
+            isShiborikomi_date = false;
+            isShiborikomi_subject = false;
+            shiborikomi_date = "";
+            shiborikomi_subjectid = 0;
+            showList();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
