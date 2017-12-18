@@ -462,7 +462,8 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     isShiborikomi_date = true;
-                    shiborikomi_date = String.valueOf(year) + "/" + String.valueOf(month+1) + "/" + String.valueOf(dayOfMonth);
+                    shiborikomi_date = String.format("%02d",year) + "/" + String.format("%02d",month+1) + "/" + String.format("%02d",dayOfMonth);
+                    Log.d("date",shiborikomi_date);
                     showList();
                 }
             };
